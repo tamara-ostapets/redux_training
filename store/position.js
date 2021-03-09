@@ -10,32 +10,35 @@ export const actions = {
   moveDown: () => ({ type: MOVE_DOWN })
 }
 
-const startPosition = { x: 0, y: 0, z: 0 }
+export const getX = position => position.left
+export const getY = position => position.top
+
+const startPosition = { left: 0, top: 0 }
 
 const positionReducer = (position = startPosition, action) => {
   switch (action.type) {
     case MOVE_LEFT :
       return {
         ...position,
-        x: position.x - 1
+        left: position.left - 1
       }
 
     case MOVE_RIGHT :
       return {
         ...position,
-        x: position.x + 1
+        left: position.left + 1
       }
 
     case MOVE_UP :
       return {
         ...position,
-        y: position.y + 1
+        top: position.top + 1
       }
 
     case MOVE_DOWN :
       return {
         ...position,
-        y: position.y - 1
+        top: position.top - 1
       }
 
     default :

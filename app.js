@@ -1,28 +1,38 @@
-import { createStore, combineReducers } from './redux.js'
+import store, { getDistanceTo, getPosition } from './store/index.js'
 
-import goodsReducer, { actions as goodsActions } from './store/goods.js'
-import amountReducer, { actions as amountActions } from './store/amount.js'
-import positionReducer, { actions as positionActions } from './store/position.js'
+import { actions as positionActions } from './store/position.js'
 
-const initialState = {
-  amount: 100,
-  goods: [],
-  position: { x: 0, y: 0, z: 0 }
-}
+// #region buttons
+const up = document.getElementById('up')
+const right = document.getElementById('right')
+const down = document.getElementById('down')
+const left = document.getElementById('left')
 
-const reducer = combineReducers({
-  amount: amountReducer,
-  goods: goodsReducer,
-  position: positionReducer
-})
+const truck = document.getElementById('block')
+const truckPosition = document.getElementById('position')
 
-const store = createStore(reducer, initialState)
+// #endregion
+
+// #region actions
+const { moveUp, moveDown, moveLeft, moveRight } = positionActions
+
+up.onclick = () => store.dispatch(moveUp())
+down.onclick = () => store.dispatch(moveDown())
+left.onclick = () => store.dispatch(moveLeft())
+right.onclick = () => store.dispatch(moveRight())
+// #endregion
 
 store.subscribe(() => {
-  console.log(store.getState())
-})
+  const state = store.getState()
+  const { x, y } = getPosition(state)
 
-store.dispatch(positionActions.moveRight())
-store.dispatch(amountActions.add(50))
-store.dispatch(amountActions.take(20))
-store.dispatch(goodsActions.add('Apple'))
+  const step = 20
+
+  truckPosition.textContent = `${x}:${y}`
+  truck.style.transform = `translate(${x * step}px, ${-y * step}px)`
+
+  truck.textContent = getDistanceTo(
+    state,
+    { x: 0, y: 0 }
+  )
+})

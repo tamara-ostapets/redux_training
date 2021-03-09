@@ -1,0 +1,37 @@
+.container {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons {
+    width: 80px;
+}
+
+.up, .down {
+    display: flex;
+    justify-content: center;
+    margin: 3px 0
+}
+
+.middle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.playground {
+    border: 3px dashed black;
+    width: 75%;
+    height: 200px;
+}
+
+#block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    color: lime;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+}
