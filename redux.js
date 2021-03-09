@@ -18,3 +18,23 @@ export function createStore (
     }
   }
 }
+
+export function combineReducers (reducers) {
+  return (state = {}, action) => {
+    const result = {}
+
+    for (const key in reducers) {
+      result[key] = reducers[key](state[key], action)
+    }
+
+    return result
+  }
+}
+
+// const reducer = (state = {}, action) => {
+//   return {
+//     amount: amountReducer(state.amount, action),
+//     goods: goodsReducer(state.goods, action),
+//     position: positionReducer(state.position, action)
+//   }
+// }

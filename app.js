@@ -1,13 +1,28 @@
-import amountReducer, { actions } from './store';
-import { createStore } from './redux'
+import { createStore, combineReducers } from './redux.js'
 
-const store = createStore(amountReducer, 100)
+import goodsReducer, { actions as goodsActions } from './store/goods.js'
+import amountReducer, { actions as amountActions } from './store/amount.js'
+import positionReducer, { actions as positionActions } from './store/position.js'
+
+const initialState = {
+  amount: 100,
+  goods: [],
+  position: { x: 0, y: 0, z: 0 }
+}
+
+const reducer = combineReducers({
+  amount: amountReducer,
+  goods: goodsReducer,
+  position: positionReducer
+})
+
+const store = createStore(reducer, initialState)
 
 store.subscribe(() => {
   console.log(store.getState())
 })
 
-store.dispatch(actions.add(20))
-store.dispatch(actions.take(40))
-store.dispatch(actions.add(50))
-store.dispatch(actions.clear())
+store.dispatch(positionActions.moveRight())
+store.dispatch(amountActions.add(50))
+store.dispatch(amountActions.take(20))
+store.dispatch(goodsActions.add('Apple'))
